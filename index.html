@@ -746,10 +746,12 @@
       </div>
     </a>
   </div>
-  <div class="footer-bottom">© 2025 Passion5. All rights reserved. · <a href="#" style="color:inherit">Privacy Policy</a> · <a href="#" style="color:inherit">Terms</a></div>
+  <div class="footer-bottom">© 2025 Passion5. All rights reserved. · <a href="#" style="color:inherit">Privacy Policy</a> · <a href="#" style="color:inherit">Terms</a> · <a href="mailto:support@passion5.fr" style="color:inherit">support@passion5.fr</a></div>
 </footer>
 
 <script>
+  const FORMSPREE_ID = 'YOUR_FORM_ID';
+
   // ── TRANSLATIONS ──
   const translations = {
     en: {
@@ -855,18 +857,44 @@
   }
 
   // ── WAITLIST ──
-  function submitWaitlist() {
-    const email = document.getElementById('emailInput').value;
-    const t = translations[currentLang];
+  async function submitWaitlist() {
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value.trim();
+    const btn = document.querySelector('.btn-primary');
+
     if (!email || !email.includes('@')) {
-      document.getElementById('emailInput').style.borderColor = '#F05A35';
+      emailInput.style.borderColor = '#F05A35';
+      emailInput.focus();
       return;
     }
+
+    btn.textContent = '...';
+    btn.disabled = true;
+    emailInput.disabled = true;
+
+    try {
+      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          language: currentLang,
+          source: 'passion5.fr waitlist'
+        })
+      });
+    } catch (e) {}
+
     document.getElementById('waitlistForm').style.display = 'none';
     const msg = document.getElementById('successMsg');
     msg.style.display = 'block';
-    msg.textContent = t.success;
+
+    const countEl = document.querySelector('.waitlist-count strong');
+    if (countEl) countEl.textContent = parseInt(countEl.textContent) + 1;
   }
+
+  document.getElementById('emailInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitWaitlist();
+  });
 
   // ── SCROLL REVEAL ──
   const observer = new IntersectionObserver(entries => {
