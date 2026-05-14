@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Passion5 — Real activities, real connections</title>
+  <meta name="description" content="Meet people through shared passions. Real activities, real connections. Coming soon to App Store & Google Play." />
+  <meta property="og:title" content="Passion5" />
+  <meta property="og:description" content="Real activities, real connections." />
+  <meta property="og:image" content="https://passion5.com/og.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1B5EE4;
+      --blue-dark: #1445B0;
+      --orange: #F05A35;
+      --bg: #FAF8F5;
+      --bg2: #F2EEE8;
+      --text: #1A1A2A;
+      --muted: #7A7A8A;
+      --white: #FFFFFF;
+      --radius: 20px;
+      --pill: 999px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(250, 248, 245, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(27,94,228,0.08);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 22px;
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .logo-heart {
+      position: relative; width: 28px; height: 28px;
+    }
+    .logo-heart svg { width: 100%; height: 100%; }
+
+    .lang-switcher {
+      display: flex; gap: 6px;
+    }
+    .lang-btn {
+      background: none; border: 1.5px solid var(--blue);
+      color: var(--blue); padding: 6px 14px;
+      border-radius: var(--pill); cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      background: var(--blue); color: var(--white);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative blobs */
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.18; pointer-events: none;
+    }
+    .blob-1 {
+      width: 500px; height: 500px;
+      background: var(--blue);
+      top: -100px; right: -150px;
+      animation: float 8s ease-in-out infinite;
+    }
+    .blob-2 {
+      width: 380px; height: 380px;
+      background: var(--orange);
+      bottom: 0; left: -100px;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    .blob-3 {
+      width: 260px; height: 260px;
+      background: var(--blue);
+      bottom: 200px; right: 10%;
+      animation: float 6s ease-in-out infinite 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue);
+      color: var(--white);
+      padding: 8px 20px; border-radius: var(--pill);
+      font-size: 13px; font-weight: 500;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge span { font-size: 16px; }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 1.0;
+      color: var(--blue);
+      margin-bottom: 12px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-title .highlight {
+      color: var(--orange);
+      display: inline-block;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 520px;
+      line-height: 1.6;
+      margin: 0 auto 48px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    /* ── WAITLIST FORM ── */
+    .waitlist {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s ease 0.3s both;
+      margin-bottom: 24px;
+    }
+
+    .waitlist input {
+      flex: 1; min-width: 240px; max-width: 340px;
+      padding: 16px 22px;
+      border: 2px solid var(--blue);
+      border-radius: var(--pill);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      background: var(--white);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .waitlist input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(240,90,53,0.12);
+    }
+    .waitlist input::placeholder { color: var(--muted); }
+
+    .btn-primary {
+      padding: 16px 32px;
+      background: var(--blue);
+      color: var(--white);
+      border: none; border-radius: var(--pill);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.5px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      background: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(240,90,53,0.35);
+    }
+
+    .waitlist-count {
+      font-size: 13px; color: var(--muted);
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+    .waitlist-count strong { color: var(--orange); }
+
+    /* success state */
+    .success-msg {
+      display: none;
+      background: var(--blue);
+      color: var(--white);
+      padding: 16px 32px;
+      border-radius: var(--pill);
+      font-size: 15px; font-weight: 500;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    /* ── APP PREVIEW MOCKUP ── */
+    .phones {
+      margin-top: 72px;
+      position: relative;
+      height: 420px;
+      display: flex; justify-content: center; align-items: flex-end;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .phone {
+      width: 200px;
+      background: var(--white);
+      border-radius: 32px;
+      border: 8px solid var(--blue);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(27,94,228,0.2);
+      position: absolute;
+    }
+
+    .phone-main {
+      height: 380px;
+      z-index: 2;
+      transform: translateY(0);
+    }
+    .phone-left {
+      height: 340px;
+      left: calc(50% - 240px);
+      transform: rotate(-8deg) translateY(20px);
+      z-index: 1;
+      opacity: 0.85;
+      border-color: var(--orange);
+    }
+    .phone-right {
+      height: 340px;
+      right: calc(50% - 240px);
+      transform: rotate(8deg) translateY(20px);
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .phone-screen {
+      height: 100%;
+      background: var(--bg);
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .phone-topbar {
+      background: var(--blue);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .phone-topbar-text { color: var(--white); font-size: 11px; font-weight: 600; }
+    .phone-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+
+    .phone-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1.5px solid rgba(27,94,228,0.1);
+    }
+    .phone-card-top {
+      background: var(--blue);
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .phone-card-emoji { font-size: 20px; }
+    .phone-card-title { color: var(--white); font-size: 10px; font-weight: 600; line-height: 1.3; }
+    .phone-card-meta { font-size: 9px; color: var(--muted); margin-bottom: 6px; }
+    .phone-join-btn {
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 9px; font-weight: 700;
+      display: inline-block;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      padding: 6px 18px; border-radius: var(--pill);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 5vw, 52px);
+      color: var(--blue);
+      line-height: 1.1;
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .step {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .step::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--blue);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .step:hover { border-color: var(--blue); transform: translateY(-4px); }
+    .step:hover::before { transform: scaleX(1); }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px; font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .step-text { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+    /* ── HOBBIES MARQUEE ── */
+    .marquee-section {
+      background: var(--blue);
+      padding: 40px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee-track {
+      display: flex; gap: 20px;
+      animation: marquee 25s linear infinite;
+      width: max-content;
+    }
+    .marquee-track2 {
+      animation-direction: reverse;
+      animation-duration: 20s;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .hobby-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+      padding: 10px 20px; border-radius: var(--pill);
+      font-size: 14px; font-weight: 500;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hobby-pill.orange {
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 680px; margin: 0 auto;
+    }
+
+    .price-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      border: 2px solid rgba(27,94,228,0.12);
+      position: relative;
+    }
+
+    .price-card.featured {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .price-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--orange);
+      color: var(--white);
+      padding: 4px 18px; border-radius: var(--pill);
+      font-size: 12px; font-weight: 700;
+    }
+
+    .price-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--blue); margin-bottom: 8px;
+    }
+    .price-card.featured .price-name { color: var(--white); }
+
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px; font-weight: 800;
+      color: var(--blue); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-card.featured .price-amount { color: var(--white); }
+
+    .price-period { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+    .price-card.featured .price-period { color: rgba(255,255,255,0.7); }
+
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .price-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text);
+    }
+    .price-card.featured .price-features li { color: rgba(255,255,255,0.9); }
+    .price-check { color: var(--orange); font-size: 16px; }
+    .price-card.featured .price-check { color: #FFD580; }
+    .price-x { color: var(--muted); font-size: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue);
+      color: var(--white);
+      padding: 60px 40px 40px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px; font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .footer-tagline { font-size: 15px; opacity: 0.7; margin-bottom: 32px; }
+
+    .store-btns {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .store-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      padding: 12px 24px; border-radius: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .store-btn:hover { background: var(--orange); border-color: var(--orange); }
+    .store-btn-icon { font-size: 22px; }
+    .store-btn-text { text-align: left; }
+    .store-btn-sub { font-size: 10px; opacity: 0.7; display: block; }
+    .store-btn-name { font-size: 15px; font-weight: 600; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 24px;
+      font-size: 13px; opacity: 0.5;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .lang-btn { padding: 5px 10px; font-size: 12px; }
+      .phones { height: 320px; }
+      .phone-main { width: 160px; height: 300px; }
+      .phone-left, .phone-right { display: none; }
+      .section { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <path d="M14 24S4 18 4 11a6 6 0 0 1 10-4.47A6 6 0 0 1 24 11c0 7-10 13-10 13z" fill="#F05A35"/>
+      <path d="M14 24s10-6 10-13a6 6 0 0 0-10-4.47" fill="#1B5EE4"/>
+      <line x1="20" y1="5" x2="22" y2="3" stroke="#1B5EE4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="23" y1="7" x2="26" y2="7" stroke="#1B5EE4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="22" y1="10" x2="24" y2="12" stroke="#1B5EE4" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Passion5
+  </a>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-badge"><span>🇫🇷</span> <span data-key="badge">Coming to France</span></div>
+
+  <h1 class="hero-title">
+    <span data-key="title1">Real activities,</span><br>
+    <span class="highlight" data-key="title2">real connections.</span>
+  </h1>
+
+  <p class="hero-sub" data-key="subtitle">
+    Meet people who share your passions. Join real activities near you — cooking, hiking, music, and more. No endless swiping.
+  </p>
+
+  <div class="waitlist" id="waitlistForm">
+    <input type="email" id="emailInput" placeholder="your@email.com" data-placeholder="email_placeholder" />
+    <button class="btn-primary" onclick="submitWaitlist()" data-key="cta">Join the Waitlist</button>
+  </div>
+  <div class="success-msg" id="successMsg" data-key="success">🎉 You're on the list! We'll notify you at launch.</div>
+  <p class="waitlist-count"><strong>847</strong> <span data-key="waitlist_count">people already waiting</span></p>
+
+  <!-- Phone mockups -->
+  <div class="phones">
+    <div class="phone phone-left">
+      <div class="phone-screen">
+        <div class="phone-topbar"><div class="phone-dot"></div><div class="phone-topbar-text">📸 Photography Walk</div></div>
+        <div class="phone-card">
+          <div class="phone-card-top"><span class="phone-card-emoji">📸</span><div class="phone-card-title">Montmartre Photo Walk</div></div>
+          <div class="phone-card-meta">📍 1.2 km away · Sat 10AM</div>
+          <div class="phone-join-btn">Join</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone phone-main">
+      <div class="phone-screen">
+        <div class="phone-topbar"><div class="phone-dot"></div><div class="phone-topbar-text">🎯 Activities Near You</div></div>
+        <div class="phone-card">
+          <div class="phone-card-top"><span class="phone-card-emoji">🍳</span><div class="phone-card-title">Moroccan Cooking Workshop</div></div>
+          <div class="phone-card-meta">📍 0.8 km · Sat 7PM · 5/8</div>
+          <div class="phone-join-btn">Join</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-top" style="background:#F05A35"><span class="phone-card-emoji">🎸</span><div class="phone-card-title">Jazz Jam Session</div></div>
+          <div class="phone-card-meta">📍 2.1 km · Fri 9PM · 6/15</div>
+          <div class="phone-join-btn" style="background:#1B5EE4">Join</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-top"><span class="phone-card-emoji">🏔️</span><div class="phone-card-title">Fontainebleau Hike</div></div>
+          <div class="phone-card-meta">📍 45 km · Sun 8AM · 12/20</div>
+          <div class="phone-join-btn">Join</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone phone-right">
+      <div class="phone-screen">
+        <div class="phone-topbar"><div class="phone-dot"></div><div class="phone-topbar-text">💬 Group Chat</div></div>
+        <div class="phone-card">
+          <div style="font-size:9px;color:var(--muted);margin-bottom:6px">Moroccan Cooking · 5 members</div>
+          <div style="font-size:10px;color:var(--text);line-height:1.5">Sophie: Can't wait! 🍲<br>Karim: I'll bring the spices<br>Léa: See you all there! 🎉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES MARQUEE -->
+<div class="marquee-section">
+  <div style="display:flex;flex-direction:column;gap:14px;overflow:hidden">
+    <div class="marquee-track">
+      <div class="hobby-pill">🎸 Music</div>
+      <div class="hobby-pill orange">⚽ Sports</div>
+      <div class="hobby-pill">🍳 Cooking</div>
+      <div class="hobby-pill">📚 Reading</div>
+      <div class="hobby-pill orange">✈️ Travel</div>
+      <div class="hobby-pill">📸 Photography</div>
+      <div class="hobby-pill">🎨 Art</div>
+      <div class="hobby-pill orange">🎮 Gaming</div>
+      <div class="hobby-pill">🎬 Cinema</div>
+      <div class="hobby-pill">💪 Fitness</div>
+      <div class="hobby-pill orange">💃 Dance</div>
+      <div class="hobby-pill">🧘 Yoga</div>
+      <!-- duplicate for seamless loop -->
+      <div class="hobby-pill">🎸 Music</div>
+      <div class="hobby-pill orange">⚽ Sports</div>
+      <div class="hobby-pill">🍳 Cooking</div>
+      <div class="hobby-pill">📚 Reading</div>
+      <div class="hobby-pill orange">✈️ Travel</div>
+      <div class="hobby-pill">📸 Photography</div>
+      <div class="hobby-pill">🎨 Art</div>
+      <div class="hobby-pill orange">🎮 Gaming</div>
+      <div class="hobby-pill">🎬 Cinema</div>
+      <div class="hobby-pill">💪 Fitness</div>
+      <div class="hobby-pill orange">💃 Dance</div>
+      <div class="hobby-pill">🧘 Yoga</div>
+    </div>
+    <div class="marquee-track marquee-track2">
+      <div class="hobby-pill">🏔️ Hiking</div>
+      <div class="hobby-pill orange">✍️ Writing</div>
+      <div class="hobby-pill">🗣️ Languages</div>
+      <div class="hobby-pill">🍷 Wine Tasting</div>
+      <div class="hobby-pill orange">🌃 Nightlife</div>
+      <div class="hobby-pill">♠️ Poker</div>
+      <div class="hobby-pill">💻 Tech</div>
+      <div class="hobby-pill orange">🎭 Theatre</div>
+      <div class="hobby-pill">🚴 Cycling</div>
+      <div class="hobby-pill">🎤 Karaoke</div>
+      <div class="hobby-pill orange">🌿 Gardening</div>
+      <div class="hobby-pill">🏊 Swimming</div>
+      <div class="hobby-pill">🏔️ Hiking</div>
+      <div class="hobby-pill orange">✍️ Writing</div>
+      <div class="hobby-pill">🗣️ Languages</div>
+      <div class="hobby-pill">🍷 Wine Tasting</div>
+      <div class="hobby-pill orange">🌃 Nightlife</div>
+      <div class="hobby-pill">♠️ Poker</div>
+      <div class="hobby-pill">💻 Tech</div>
+      <div class="hobby-pill orange">🎭 Theatre</div>
+      <div class="hobby-pill">🚴 Cycling</div>
+      <div class="hobby-pill">🎤 Karaoke</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section reveal">
+  <div class="section-label" data-key="how_label">How it works</div>
+  <h2 class="section-title" data-key="how_title">Three steps to real connections</h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title" data-key="step1_title">Pick 5 Passions</div>
+      <p class="step-text" data-key="step1_text">Choose the 5 hobbies that define you — from cooking and music to hiking and photography.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-title" data-key="step2_title">Discover Activities</div>
+      <p class="step-text" data-key="step2_text">Find real events near you organized by people who share your passions. Join in seconds.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-title" data-key="step3_title">Meet for Real</div>
+      <p class="step-text" data-key="step3_text">Show up, do what you love, and let genuine connections happen naturally — no awkward first messages.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section reveal" style="background:var(--bg2);border-radius:40px;max-width:1000px;margin:0 auto 60px;">
+  <div style="text-align:center;margin-bottom:60px">
+    <div class="section-label" data-key="pricing_label">Pricing</div>
+    <h2 class="section-title" data-key="pricing_title">Start free, upgrade when you love it</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name" data-key="free_name">Free</div>
+      <div class="price-amount">€0</div>
+      <div class="price-period" data-key="free_period">forever</div>
+      <ul class="price-features">
+        <li><span class="price-check">✓</span> <span data-key="f1">3 activities per month</span></li>
+        <li><span class="price-check">✓</span> <span data-key="f2">1 activity created/month</span></li>
+        <li><span class="price-check">✓</span> <span data-key="f3">Group chat access</span></li>
+        <li><span class="price-check">✓</span> <span data-key="f4">XP points & badges</span></li>
+        <li><span class="price-x">✗</span> <span data-key="f5" style="color:var(--muted)">See profile views</span></li>
+        <li><span class="price-x">✗</span> <span data-key="f6" style="color:var(--muted)">Exclusive Plus badges</span></li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge" data-key="popular">Most Popular</div>
+      <div class="price-name" data-key="plus_name">Plus 👑</div>
+      <div class="price-amount">€7.99</div>
+      <div class="price-period" data-key="plus_period">per month · 7-day free trial</div>
+      <ul class="price-features">
+        <li><span class="price-check">✓</span> <span data-key="p1">Unlimited activities</span></li>
+        <li><span class="price-check">✓</span> <span data-key="p2">Unlimited creation</span></li>
+        <li><span class="price-check">✓</span> <span data-key="p3">Group & private chat</span></li>
+        <li><span class="price-check">✓</span> <span data-key="p4">XP points & badges</span></li>
+        <li><span class="price-check">✓</span> <span data-key="p5">See who viewed your profile</span></li>
+        <li><span class="price-check">✓</span> <span data-key="p6">Exclusive Plus badges 👑</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Passion5</div>
+  <p class="footer-tagline" data-key="footer_tagline">Real activities, real connections.</p>
+  <div class="store-btns">
+    <a href="#" class="store-btn">
+      <span class="store-btn-icon">🍎</span>
+      <div class="store-btn-text">
+        <span class="store-btn-sub" data-key="coming_soon">Coming Soon</span>
+        <span class="store-btn-name">App Store</span>
+      </div>
+    </a>
+    <a href="#" class="store-btn">
+      <span class="store-btn-icon">▶</span>
+      <div class="store-btn-text">
+        <span class="store-btn-sub" data-key="coming_soon">Coming Soon</span>
+        <span class="store-btn-name">Google Play</span>
+      </div>
+    </a>
+  </div>
+  <div class="footer-bottom">© 2025 Passion5. All rights reserved. · <a href="#" style="color:inherit">Privacy Policy</a> · <a href="#" style="color:inherit">Terms</a></div>
+</footer>
+
+<script>
+  // ── TRANSLATIONS ──
+  const translations = {
+    en: {
+      badge: "Coming to France 🇫🇷",
+      title1: "Real activities,",
+      title2: "real connections.",
+      subtitle: "Meet people who share your passions. Join real activities near you — cooking, hiking, music, and more. No endless swiping.",
+      cta: "Join the Waitlist",
+      email_placeholder: "your@email.com",
+      success: "🎉 You're on the list! We'll notify you at launch.",
+      waitlist_count: "people already waiting",
+      how_label: "How it works",
+      how_title: "Three steps to real connections",
+      step1_title: "Pick 5 Passions",
+      step1_text: "Choose the 5 hobbies that define you — from cooking and music to hiking and photography.",
+      step2_title: "Discover Activities",
+      step2_text: "Find real events near you organized by people who share your passions. Join in seconds.",
+      step3_title: "Meet for Real",
+      step3_text: "Show up, do what you love, and let genuine connections happen naturally.",
+      pricing_label: "Pricing",
+      pricing_title: "Start free, upgrade when you love it",
+      free_name: "Free", free_period: "forever",
+      plus_name: "Plus 👑", plus_period: "per month · 7-day free trial",
+      popular: "Most Popular",
+      f1:"3 activities per month", f2:"1 activity created/month", f3:"Group chat access", f4:"XP points & badges", f5:"See profile views", f6:"Exclusive Plus badges",
+      p1:"Unlimited activities", p2:"Unlimited creation", p3:"Group & private chat", p4:"XP points & badges", p5:"See who viewed your profile", p6:"Exclusive Plus badges 👑",
+      footer_tagline: "Real activities, real connections.",
+      coming_soon: "Coming Soon",
+    },
+    fr: {
+      badge: "Bientôt en France 🇫🇷",
+      title1: "De vraies activités,",
+      title2: "de vraies rencontres.",
+      subtitle: "Rencontrez des personnes qui partagent vos passions. Rejoignez des activités réelles près de chez vous — cuisine, randonnée, musique et plus encore.",
+      cta: "Rejoindre la liste",
+      email_placeholder: "votre@email.com",
+      success: "🎉 Vous êtes sur la liste ! On vous notifie au lancement.",
+      waitlist_count: "personnes déjà inscrites",
+      how_label: "Comment ça marche",
+      how_title: "Trois étapes vers de vraies connexions",
+      step1_title: "Choisissez 5 passions",
+      step1_text: "Sélectionnez les 5 loisirs qui vous définissent — cuisine, musique, randonnée, photographie...",
+      step2_title: "Découvrez des activités",
+      step2_text: "Trouvez de vrais événements près de chez vous organisés par des passionnés comme vous.",
+      step3_title: "Rencontrez-vous vraiment",
+      step3_text: "Venez, faites ce que vous aimez, et laissez les connexions authentiques se faire naturellement.",
+      pricing_label: "Tarifs",
+      pricing_title: "Gratuit pour commencer, Plus quand vous aimez",
+      free_name: "Gratuit", free_period: "pour toujours",
+      plus_name: "Plus 👑", plus_period: "par mois · 7 jours d'essai",
+      popular: "Le plus populaire",
+      f1:"3 activités par mois", f2:"1 activité créée/mois", f3:"Chat de groupe", f4:"Points XP & badges", f5:"Voir les vues profil", f6:"Badges Plus exclusifs",
+      p1:"Activités illimitées", p2:"Création illimitée", p3:"Chat groupe & privé", p4:"Points XP & badges", p5:"Voir qui a vu votre profil", p6:"Badges Plus exclusifs 👑",
+      footer_tagline: "De vraies activités, de vraies rencontres.",
+      coming_soon: "Bientôt disponible",
+    },
+    ar: {
+      badge: "قريباً في فرنسا 🇫🇷",
+      title1: "أنشطة حقيقية،",
+      title2: "علاقات حقيقية.",
+      subtitle: "تعرّف على أشخاص يشاركونك نفس الشغف. انضم إلى أنشطة حقيقية بالقرب منك — طبخ، مشي، موسيقى والمزيد.",
+      cta: "انضم لقائمة الانتظار",
+      email_placeholder: "بريدك@الإلكتروني.com",
+      success: "🎉 أنت على القائمة! سنُخطرك عند الإطلاق.",
+      waitlist_count: "شخص ينتظر بالفعل",
+      how_label: "كيف يعمل",
+      how_title: "ثلاث خطوات لعلاقات حقيقية",
+      step1_title: "اختر 5 شغفات",
+      step1_text: "اختر 5 هوايات تعبّر عنك — من الطبخ والموسيقى إلى التصوير والمشي في الجبال.",
+      step2_title: "اكتشف الأنشطة",
+      step2_text: "ابحث عن فعاليات حقيقية قريبة منك ينظمها أشخاص يشاركونك نفس الاهتمامات.",
+      step3_title: "التقِ للحقيقة",
+      step3_text: "احضر، افعل ما تحب، ودع العلاقات الحقيقية تنشأ بشكل طبيعي.",
+      pricing_label: "الأسعار",
+      pricing_title: "ابدأ مجاناً، رقِّ عندما تحبه",
+      free_name: "مجاني", free_period: "للأبد",
+      plus_name: "Plus 👑", plus_period: "شهرياً · تجربة مجانية 7 أيام",
+      popular: "الأكثر شعبية",
+      f1:"3 أنشطة شهرياً", f2:"إنشاء نشاط واحد/شهر", f3:"شات جماعي", f4:"نقاط XP وشارات", f5:"رؤية مشاهدات البروفايل", f6:"شارات Plus حصرية",
+      p1:"أنشطة غير محدودة", p2:"إنشاء غير محدود", p3:"شات جماعي وخاص", p4:"نقاط XP وشارات", p5:"مين شاف بروفايلك", p6:"شارات Plus حصرية 👑",
+      footer_tagline: "أنشطة حقيقية، علاقات حقيقية.",
+      coming_soon: "قريباً",
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    const t = translations[lang];
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if (t[key]) el.textContent = t[key];
+    });
+    document.querySelectorAll('[data-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-placeholder');
+      if (t[key]) el.placeholder = t[key];
+    });
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  }
+
+  // ── WAITLIST ──
+  function submitWaitlist() {
+    const email = document.getElementById('emailInput').value;
+    const t = translations[currentLang];
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').style.borderColor = '#F05A35';
+      return;
+    }
+    document.getElementById('waitlistForm').style.display = 'none';
+    const msg = document.getElementById('successMsg');
+    msg.style.display = 'block';
+    msg.textContent = t.success;
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
