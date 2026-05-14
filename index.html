@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -533,8 +533,8 @@
     Passion5
   </a>
   <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
     <button class="lang-btn" onclick="setLang('ar')">AR</button>
   </div>
 </nav>
@@ -837,7 +837,7 @@
     }
   };
 
-  let currentLang = 'en';
+  let currentLang = 'fr';
 
   function setLang(lang) {
     currentLang = lang;
@@ -902,6 +902,8 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  setLang('fr');
 </script>
 </body>
 </html>
